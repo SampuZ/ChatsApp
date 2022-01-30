@@ -1,40 +1,50 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, Navigate   } from 'react-router-dom';
+import "./login.css";
+
+async function loginUser(credentials) {
+  return fetch('http://localhost:8080/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+  .then(data => data.json())
+}
+
 
 export default class Login extends React.Component {
   
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.userid=React.createRef();
         this.passwd=React.createRef();
-
+        this.state = { redirect: null };
     }
 
-    loginUser(credentials) {
-        return fetch('http://localhost:8080/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(credentials)
-        })
-        .then(data => data.json())
-
+    setToken(token){
+      this.props.token=token;
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
 
-        const token=this.loginUser({
+        const token=await loginUser({
           uid:this.userid.current.value,
           pwd:this.passwd.current.value
         });
-        // setToken(token);
+        console.log("Response:-"+JSON.stringify(token))
+        this.setToken(token);
+        this.setState({ redirect: "/chat" });
     }
   
-    render(){
+  render(){
+    if (this.state.redirect) {
+      return <Navigate to={this.state.redirect} />
+    }
     return(
-        <div>
+        <div align="center">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <label>
             <p>Username</p>

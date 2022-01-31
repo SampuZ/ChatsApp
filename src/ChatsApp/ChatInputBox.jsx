@@ -6,7 +6,6 @@ export default class ChatInputBox extends React.Component{
         super(props);
         this.myRef = React.createRef();
         this.sendMessage = this.sendMessage.bind(this);
-        console.clear();
     }
 
 

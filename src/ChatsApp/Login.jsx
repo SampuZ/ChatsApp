@@ -18,13 +18,19 @@ export default class Login extends React.Component {
   
     constructor(props){
         super(props);
-        this.userid=React.createRef();
-        this.passwd=React.createRef();
         this.state = { redirect: null };
+        
+        if(props.logout=="true"){
+          this.setToken("");
+          this.setState({ redirect: "/" });
+        }
+        this.userid=React.createRef();
+        this.passwd=React.createRef();        
     }
 
-    setToken(token){
-      this.props.token=token;
+    setToken(tokenJSON){
+      console.log("Setting prop:"+tokenJSON.token);
+      this.props.token(tokenJSON.token);
     }
 
     async handleSubmit(e) {
@@ -36,7 +42,7 @@ export default class Login extends React.Component {
         });
         console.log("Response:-"+JSON.stringify(token))
         this.setToken(token);
-        this.setState({ redirect: "/chat" });
+        //this.setState({ redirect: "/chat" });
     }
   
   render(){

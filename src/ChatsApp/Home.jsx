@@ -17,10 +17,12 @@ export default class Home extends React.Component{
     }
 
     render(){
-        if(this.state.homeToken!==undefined){
+        if(this.state.homeToken!==undefined &&
+            this.state.homeToken!==""){
             return(
                 <div align="center">
-            <Link to={{pathname:"/logout"}}>Logout</Link>
+            <Link to={{pathname:"/logout"}}>Logout</Link><br></br>
+            <Link to={{pathname:"/chat"}}>ChatsApp</Link>
             </div>
             );
         }

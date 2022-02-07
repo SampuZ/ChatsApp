@@ -10,7 +10,8 @@ export default class App extends React.Component {
 
   constructor(){
     super();
-    this.state={token:""};
+    let savedToken=this.getToken();
+    this.state={token:savedToken};
     this.setToken=this.setToken.bind(this);
   }
 
@@ -19,15 +20,24 @@ export default class App extends React.Component {
     this.setState({
       token:tok
     });
+    sessionStorage.setItem('token', tok);
   }
+
+  getToken(){
+    const tokenString = sessionStorage.getItem('token');
+    console.log("Got Token="+tokenString);
+    if(tokenString===undefined)
+      return "";
+    return tokenString;
+  }  
 
   render(){
     return (
       <Router>
       <Routes>
-      <Route path="/" element={<Home token={this.state.token}/>}/>
-      <Route path="/login" element={<Login token={this.setToken}/>}/>
-      <Route path="/logout" element={<Login token={this.setToken} logout="true"/>}/>
+      <Route path="/" element={<Home token={this.state.token} setToken={this.setToken}/>}/>
+      <Route path="/login" element={<Login token={this.setToken} setToken={this.setToken}/>}/>
+      <Route path="/logout" element={<Login token={this.setToken} setToken={this.setToken} logout="true"/>}/>
       <Route path="/chat" element={<ChatWindow/>}/>
       </Routes>
       </Router>

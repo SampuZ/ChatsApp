@@ -3,6 +3,7 @@ import ChatInputBox from "./ChatInputBox";
 import "./chatstyle2.css";
 import ContactList from "./ContactList";
 import ChatBox from "./ChatBox";
+import { Link } from "react-router-dom";
 
 export default class ChatWindow extends React.Component{
 
@@ -26,6 +27,10 @@ export default class ChatWindow extends React.Component{
     render(){
         return(
         <div>
+			<p align="center">
+			<Link to={{pathname:"/"}}>Home</Link>
+			<Link to={{pathname:"/logout"}}>Logout</Link>
+			</p>
           <div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">

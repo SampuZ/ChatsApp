@@ -3,6 +3,7 @@ import { Link, Navigate   } from 'react-router-dom';
 import "./login.css";
 
 async function loginUser(credentials) {
+  console.log(JSON.stringify(credentials));
   return fetch('http://localhost:8080/login', {
     method: 'POST',
     headers: {
@@ -21,32 +22,29 @@ export default class Login extends React.Component {
         this.state = { redirect: null };
         
         if(props.logout=="true"){
-          this.setToken("");
+          this.props.setToken("");
+          console.log("Redirect>");
           this.setState({ redirect: "/" });
         }
         this.userid=React.createRef();
         this.passwd=React.createRef();        
     }
 
-    setToken(tokenJSON){
-      console.log("Setting prop:"+tokenJSON.token);
-      this.props.token(tokenJSON.token);
-    }
-
     async handleSubmit(e) {
         e.preventDefault();
 
-        const token=await loginUser({
+        const tokenJSON=await loginUser({
           uid:this.userid.current.value,
           pwd:this.passwd.current.value
         });
-        console.log("Response:-"+JSON.stringify(token))
-        this.setToken(token);
-        //this.setState({ redirect: "/chat" });
+        console.log("Response:-"+JSON.stringify(tokenJSON))
+        this.props.setToken(tokenJSON.token);
+        this.setState({ redirect: "/chat" });
     }
   
   render(){
-    if (this.state.redirect) {
+    console.log("Redirect to "+this.state.redirect);
+    if (this.state.redirect!==null) {
       return <Navigate to={this.state.redirect} />
     }
     return(
@@ -54,7 +52,7 @@ export default class Login extends React.Component {
         <form onSubmit={this.handleSubmit.bind(this)}>
           <label>
             <p>Username</p>
-            <input type="text" ref={this.userid}/>
+            <input type="text" ref={this.userid} required/>
           </label>
           <br></br>
           <label>

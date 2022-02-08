@@ -9,8 +9,19 @@ export default class ChatWindow extends React.Component{
 
     constructor(props){
         super(props);
-		this.state={pendingMsg:null};
+		this.state={
+			pendingMsg:null,
+			cname:""
+		};
 		this.setPendingMessage=this.setPendingMessage.bind(this);
+    }
+
+	static getDerivedStateFromProps(nextProps, prevState){
+        console.log("Chat Token:"+nextProps.getToken());
+		let tokenJson=JSON.parse(nextProps.getToken());
+        return {
+			cname:tokenJson.cname
+		}
     }
 
 	setPendingMessage(msg){
@@ -30,6 +41,8 @@ export default class ChatWindow extends React.Component{
 			<p align="center">
 			<Link to={{pathname:"/"}}>Home</Link>
 			<Link to={{pathname:"/logout"}}>Logout</Link>
+			<br></br>
+			<h2>Welcome {this.state.cname}</h2>
 			</p>
           <div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">

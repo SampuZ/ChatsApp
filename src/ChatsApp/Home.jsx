@@ -18,10 +18,12 @@ export default class Home extends React.Component{
     }
 
     render(){
-        if(this.state.homeToken!="undefined" &&
-            this.state.homeToken!=""){
+        let token=this.state.homeToken;
+
+        if(token!==null){
             return(
                 <div align="center">
+                    {/* Token:[{this.state.homeToken}] */}
             <Link to={{pathname:"/logout"}}>Logout</Link><br></br>
             <Link to={{pathname:"/chat"}}>ChatsApp</Link>
             </div>
@@ -29,7 +31,7 @@ export default class Home extends React.Component{
         }
         return(
             <div align="center">
-                {this.state.token}
+                 {/* Token:{this.state.token} */}
             <Link to={{pathname:"/login"}}>Login</Link>
             </div>
         );

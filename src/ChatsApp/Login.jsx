@@ -38,7 +38,7 @@ export default class Login extends React.Component {
           pwd:this.passwd.current.value
         });
         console.log("Response:-"+JSON.stringify(tokenJSON))
-        this.props.setToken(tokenJSON.token);
+        this.props.setToken(tokenJSON);
         this.setState({ redirect: "/chat" });
     }
   

@@ -16,15 +16,15 @@ export default class App extends React.Component {
   }
 
   setToken(tok){
-    console.log("App Token="+tok);
+    console.log("App Token="+JSON.stringify(tok));
     this.setState({
-      token:tok
+      token:tok.token
     });
-    sessionStorage.setItem('token', tok);
+    localStorage.setItem('token', JSON.stringify(tok));
   }
 
   getToken(){
-    const tokenString = sessionStorage.getItem('token');
+    const tokenString = localStorage.getItem('token');
     console.log("Got Token="+tokenString);
     if(tokenString===undefined)
       return "";
@@ -35,10 +35,10 @@ export default class App extends React.Component {
     return (
       <Router>
       <Routes>
-      <Route path="/" element={<Home token={this.state.token} setToken={this.setToken}/>}/>
+      <Route path="/" element={<Home token={this.state.token} getToken={this.getToken}/>}/>
       <Route path="/login" element={<Login token={this.setToken} setToken={this.setToken}/>}/>
       <Route path="/logout" element={<Login token={this.setToken} setToken={this.setToken} logout="true"/>}/>
-      <Route path="/chat" element={<ChatWindow/>}/>
+      <Route path="/chat" element={<ChatWindow getToken={this.getToken}/>}/>
       </Routes>
       </Router>
     );

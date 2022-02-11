@@ -14,6 +14,21 @@ export default class ChatWindow extends React.Component{
 			cname:""
 		};
 		this.setPendingMessage=this.setPendingMessage.bind(this);
+
+		const url = 'ws://localhost:8081'
+		const connection = new WebSocket(url)
+		
+		connection.onopen = () => {
+			connection.send('Client Online:-'+this.state.cname); 
+		}
+		
+		connection.onerror = (error) => {
+			console.log(`WebSocket error: ${error}`)
+		}
+		
+		connection.onmessage = (e) => {
+			console.log("Server:-"+e.data)
+		}
     }
 
 	static getDerivedStateFromProps(nextProps, prevState){

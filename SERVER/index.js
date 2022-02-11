@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser'); // Middleware 
 const reactDom = require('react-dom');
 const { validate } = require('./inspector');
-const { showUserList } = require('./chatServer');
+const { showUserList, startWebSocket } = require('./chatServer');
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,3 +22,5 @@ app.listen(8080, () => {
   console.log('API is running on http://localhost:8080/login');
   showUserList();
 });
+
+startWebSocket(8081);

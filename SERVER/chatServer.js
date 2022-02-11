@@ -18,4 +18,23 @@ function showUserList(){
     }
 };
 
-module.exports={addChatUser,showUserList};
+
+function startWebSocket(port){
+
+    const WebSocket = require('ws')
+     
+    const wss = new WebSocket.Server({ port: port })
+     
+    wss.on('connection', ws => {
+      ws.on('message', message => {
+        console.log('Received message =>'+message);
+        if(message.includes('Client Online:-')){
+            console.log("online-----"+message.split("-")[1]);
+            addChatUser(message.split("-")[1]);
+        }
+      })
+      ws.send('Hello! Message From Server!!')
+    })
+};
+
+module.exports={addChatUser,showUserList,startWebSocket};

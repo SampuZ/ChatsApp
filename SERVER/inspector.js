@@ -15,10 +15,12 @@ function validate(data){
         chatName="Pluto";
     }
 
+    if(data.uid!==""){
+        chatName=data.uid;
+    }
+
     if(chatName!=="")
         addChatUser(chatName);
-    else
-        addChatUser(data.uid);
     
     return {
         token:"sampu",

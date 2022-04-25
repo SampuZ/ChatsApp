@@ -18,6 +18,10 @@ app.post('/login', (req, res) => {
     res.send(validate(req.body));
 });
 
+app.get('/contact', (req,res)=> {
+  res.send(showUserList());
+});
+
 app.listen(8080, () => {
   console.log('API is running on http://localhost:8080/login');
   showUserList();

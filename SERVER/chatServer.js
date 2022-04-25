@@ -7,7 +7,10 @@ const generateUID = () => {
 
 
 function addChatUser(data) {
-    clients.push(data);
+    if(data==undefined) return;
+
+    console.log("adding chat user:-"+data);
+    clients.push({"chatname":data});
     showUserList();
 };
 
@@ -16,6 +19,7 @@ function showUserList(){
     for(var i=0;i<clients.length;i++){
         console.log(clients[i]);
     }
+    return JSON.stringify(clients);
 };
 
 
@@ -30,7 +34,8 @@ function startWebSocket(port){
         console.log('Received message =>'+message);
         if(message.includes('Client Online:-')){
             console.log("online-----"+message.split("-")[1]);
-            addChatUser(message.split("-")[1]);
+            usr=message.split("-")[1];
+            if(usr!="")addChatUser();
         }
       })
       ws.send('Hello! Message From Server!!')

@@ -20,11 +20,11 @@ export default class App extends React.Component {
     this.setState({
       token:tok.token
     });
-    localStorage.setItem('token', JSON.stringify(tok));
+    sessionStorage.setItem('token', JSON.stringify(tok));
   }
 
   getToken(){
-    const tokenString = localStorage.getItem('token');
+    const tokenString = sessionStorage.getItem('token');
     console.log("Got Token="+tokenString);
     if(tokenString===undefined)
       return "";
